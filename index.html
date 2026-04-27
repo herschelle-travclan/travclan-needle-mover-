@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TravPlan Portal</title>
+  <title>TravClan Needle Mover</title>
   <style>* { margin: 0; padding: 0; box-sizing: border-box; }</style>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
@@ -30,34 +30,35 @@ const BOOKING = {
 };
 
 const STATUSES = [
-  { key: "confirmed", label: "Booking Confirmed", date: "22 Apr 2026", done: true, icon: "✓" },
-  { key: "customization", label: "Customization Phase", date: "24 Apr 2026", done: true, icon: "⚙" },
-  { key: "voucher", label: "Voucher Shared", date: "27 Apr 2026", done: true, icon: "📄", active: true },
-  { key: "docs_pending", label: "Docs Pending", date: "—", done: false, icon: "📋" },
-  { key: "docs_complete", label: "Docs Complete", date: "—", done: false, icon: "✅" },
-  { key: "travel_started", label: "Travel Started", date: "15 May 2026", done: false, icon: "✈" },
+  { key: "received", label: "Booking Received", date: "20 Apr 2026", done: true, icon: "📩" },
+  { key: "processing", label: "Processing", date: "21 Apr 2026", done: true, icon: "⏳" },
+  { key: "confirmation", label: "Confirmation", date: "22 Apr 2026", done: true, icon: "✓" },
+  { key: "customisation", label: "Customisation", date: "24 Apr 2026", done: true, icon: "⚙" },
+  { key: "documentation", label: "Documentation", date: "26 Apr 2026", done: true, icon: "📋", active: true },
+  { key: "voucher", label: "Voucher Shared", date: "—", done: false, icon: "📄" },
+  { key: "journey", label: "Start of Journey", date: "15 May 2026", done: false, icon: "✈" },
 ];
 
 const ADDONS = [
-  { id: 1, name: "Desert Safari with BBQ Dinner", price: "₹4,500", pp: "/person", img: "🏜️", tag: "Bestseller", desc: "Evening desert drive, camel ride, live entertainment & BBQ buffet" },
-  { id: 2, name: "Dhow Cruise – Marina", price: "₹3,200", pp: "/person", img: "🚢", tag: "Popular", desc: "2-hour cruise with buffet dinner, live music & stunning skyline views" },
-  { id: 3, name: "Candlelight Dinner at Burj Al Arab", price: "₹8,900", pp: "/couple", img: "🕯️", tag: "Premium", desc: "Exclusive 7-course meal at the world's most iconic hotel" },
-  { id: 4, name: "IMG Worlds of Adventure", price: "₹3,800", pp: "/person", img: "🎢", tag: "Family", desc: "World's largest indoor theme park – Marvel, Cartoon Network & more" },
-  { id: 5, name: "Abu Dhabi Day Tour", price: "₹5,200", pp: "/person", img: "🕌", tag: "Day Trip", desc: "Sheikh Zayed Mosque, Louvre Abu Dhabi, Corniche & lunch included" },
-  { id: 6, name: "Helicopter Sightseeing (12 min)", price: "₹12,500", pp: "/person", img: "🚁", tag: "Luxury", desc: "Aerial views of Palm Jumeirah, Burj Khalifa & The World Islands" },
+  { id: 1, name: "Desert Safari with BBQ Dinner", price: "₹4,500", numPrice: 4500, pp: "/person", img: "🏜️", tag: "Bestseller", desc: "Evening desert drive, camel ride, live entertainment & BBQ buffet" },
+  { id: 2, name: "Dhow Cruise – Marina", price: "₹3,200", numPrice: 3200, pp: "/person", img: "🚢", tag: "Popular", desc: "2-hour cruise with buffet dinner, live music & stunning skyline views" },
+  { id: 3, name: "Candlelight Dinner at Burj Al Arab", price: "₹8,900", numPrice: 8900, pp: "/couple", img: "🕯️", tag: "Premium", desc: "Exclusive 7-course meal at the world's most iconic hotel" },
+  { id: 4, name: "IMG Worlds of Adventure", price: "₹3,800", numPrice: 3800, pp: "/person", img: "🎢", tag: "Family", desc: "World's largest indoor theme park – Marvel, Cartoon Network & more" },
+  { id: 5, name: "Abu Dhabi Day Tour", price: "₹5,200", numPrice: 5200, pp: "/person", img: "🕌", tag: "Day Trip", desc: "Sheikh Zayed Mosque, Louvre Abu Dhabi, Corniche & lunch included" },
+  { id: 6, name: "Helicopter Sightseeing (12 min)", price: "₹12,500", numPrice: 12500, pp: "/person", img: "🚁", tag: "Luxury", desc: "Aerial views of Palm Jumeirah, Burj Khalifa & The World Islands" },
 ];
 
 const PROMOS = [
-  { id: 1, partner: "Star Cruises", offer: "3N Singapore–Penang Cruise", price: "From ₹18,999/pax", commission: "1.5% commission", color: "#0a4d8c", accent: "#38bdf8" },
-  { id: 2, partner: "Atlantis Aquaventure", offer: "Waterpark + Lost Chambers Combo", price: "₹4,200/pax", commission: "2% commission", color: "#155e4a", accent: "#34d399" },
-  { id: 3, partner: "Emirates Holidays", offer: "Maldives 4N Beach Villa", price: "From ₹62,000/pax", commission: "1% commission", color: "#7c2d12", accent: "#fb923c" },
+  { id: 1, partner: "Star Cruises", offer: "3N Singapore–Penang Cruise", price: "₹18,999/pax", numPrice: 18999, commPct: 1.5, commission: "1.5% commission", color: "#0a4d8c", accent: "#38bdf8" },
+  { id: 2, partner: "Atlantis Aquaventure", offer: "Waterpark + Lost Chambers Combo", price: "₹4,200/pax", numPrice: 4200, commPct: 2, commission: "2% commission", color: "#155e4a", accent: "#34d399" },
+  { id: 3, partner: "Emirates Holidays", offer: "Maldives 4N Beach Villa", price: "₹62,000/pax", numPrice: 62000, commPct: 1, commission: "1% commission", color: "#7c2d12", accent: "#fb923c" },
 ];
 
 const EMAILS = [
   { from: "agent", subject: "Booking Request – Dubai 5N/6D", date: "20 Apr", snippet: "Need a Dubai package for 2A+1C, 15-20 May. Prefer JW Marriott..." },
   { from: "team", subject: "Re: Booking Request – TXTIF Confirmed", date: "22 Apr", snippet: "Booking confirmed! ID: TXTIF-2026-DXB. JW Marriott Marquis secured..." },
   { from: "agent", subject: "Re: Customization – Add Marina Cruise", date: "23 Apr", snippet: "Can we add a Dhow Cruise on Day 3 evening? Also need vegetarian meals..." },
-  { from: "team", subject: "Re: Customization Approved", date: "24 Apr", snippet: "Dhow Cruise added for Day 3. Veg meals confirmed with hotel. Updated itinerary..." },
+  { from: "team", subject: "Re: Customization Approved", date: "24 Apr", snippet: "Dhow Cruise added for Day 3. Veg meals confirmed. Updated itinerary attached..." },
   { from: "team", subject: "Voucher – TXTIF-2026-DXB", date: "27 Apr", snippet: "Please find attached the booking voucher. Kindly share docs at earliest..." },
 ];
 
@@ -70,7 +71,7 @@ const tagColors = {
   Luxury: { bg: "#fff1f2", text: "#9f1239" },
 };
 
-function TravPlanPortal() {
+function NeedleMoverPortal() {
   const [tab, setTab] = useState("status");
   const [customText, setCustomText] = useState("");
   const [customStatus, setCustomStatus] = useState(null);
@@ -78,6 +79,9 @@ function TravPlanPortal() {
   const [showEmailDetail, setShowEmailDetail] = useState(null);
   const [loaded, setLoaded] = useState(false);
   const [aiThinking, setAiThinking] = useState(false);
+  const [addonsConfirmed, setAddonsConfirmed] = useState(false);
+  const [selectedPromos, setSelectedPromos] = useState(new Set());
+  const [dealsConfirmed, setDealsConfirmed] = useState(false);
 
   useEffect(() => { setTimeout(() => setLoaded(true), 100); }, []);
 
@@ -87,14 +91,49 @@ function TravPlanPortal() {
     setCustomStatus(null);
     setTimeout(() => {
       setAiThinking(false);
-      const canDo = customText.toLowerCase().includes("cancel") || customText.toLowerCase().includes("refund")
-        ? false : true;
-      setCustomStatus(canDo ? "approved" : "manual");
+      const t = customText.toLowerCase();
+      const rejectWords = ["cancel", "refund", "destination change", "change destination", "full refund", "different country", "change dates", "date change"];
+      const isReject = rejectWords.some(w => t.includes(w));
+      const approveExamples = [
+        { match: ["safari", "desert"], msg: "Desert Safari experience added to Day 4 evening." },
+        { match: ["cruise", "dhow", "marina"], msg: "Dhow Cruise added to your itinerary for Day 3." },
+        { match: ["dinner", "candlelight", "restaurant"], msg: "Candlelight dinner reservation confirmed for Day 5." },
+        { match: ["extra night", "extend", "additional night"], msg: "Extra night added. Updated checkout date reflected." },
+        { match: ["sightseeing", "tour", "global village", "abu dhabi"], msg: "Sightseeing tour added to your itinerary." },
+        { match: ["meal", "vegetarian", "veg", "food", "breakfast"], msg: "Meal preferences updated for all booked properties." },
+        { match: ["transfer", "airport", "pickup", "drop"], msg: "Airport transfer added to your booking." },
+        { match: ["upgrade", "room", "suite"], msg: "Room upgrade request processed. Revised pricing shared." },
+        { match: ["helicopter", "balloon"], msg: "Premium experience added to your itinerary." },
+      ];
+      let approveMsg = "Your request has been approved and our team is processing it. You'll receive a confirmation update within 2 hours.";
+      let backendMsg = "[Internal ref: AI classified against SOPs → Auto-approved. Email auto-sent to supplier for confirmation.]";
+      if (!isReject) {
+        const matched = approveExamples.find(ex => ex.match.some(m => t.includes(m)));
+        if (matched) approveMsg = matched.msg + " You'll receive a confirmation update within 2 hours.";
+      }
+      let rejectMsg = "Your request is being reviewed by our team. A dedicated team member will evaluate and respond within 4 hours.";
+      let rejectBackend = "[Internal ref: AI classified as manual review per SOPs. ";
+      if (t.includes("cancel")) rejectBackend += "Cancellation requires human approval + supplier coordination.]";
+      else if (t.includes("refund")) rejectBackend += "Refund processing needs finance team sign-off.]";
+      else if (t.includes("date")) rejectBackend += "Date changes require supplier re-confirmation + availability check.]";
+      else if (t.includes("destination")) rejectBackend += "Destination change needs full rebooking workflow.]";
+      else rejectBackend += "Request flagged for human judgment.]";
+      setCustomStatus(isReject ? { type: "manual", msg: rejectMsg, backend: rejectBackend } : { type: "approved", msg: approveMsg, backend: backendMsg });
     }, 2200);
   };
 
   const toggleAddon = (id) => {
+    setAddonsConfirmed(false);
     setAddedAddons(prev => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
+    });
+  };
+
+  const togglePromo = (id) => {
+    setDealsConfirmed(false);
+    setSelectedPromos(prev => {
       const next = new Set(prev);
       next.has(id) ? next.delete(id) : next.add(id);
       return next;
@@ -125,7 +164,7 @@ function TravPlanPortal() {
 
         React.createElement("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "flex-start", position: "relative", zIndex: 1 } },
           React.createElement("div", null,
-            React.createElement("div", { style: { fontSize: 11, fontWeight: 600, letterSpacing: 2, color: "#fbbf24", textTransform: "uppercase", marginBottom: 4 } }, "TravPlan Portal"),
+            React.createElement("div", { style: { fontSize: 11, fontWeight: 600, letterSpacing: 2, color: "#fbbf24", textTransform: "uppercase", marginBottom: 4 } }, "TravClan Needle Mover"),
             React.createElement("div", { style: { fontFamily: "'Playfair Display', serif", fontSize: 22, fontWeight: 700, color: "#fff", lineHeight: 1.2 } }, BOOKING.destination),
             React.createElement("div", { style: { fontSize: 13, color: "#94a3b8", marginTop: 4 } }, BOOKING.package + " · " + BOOKING.nights)
           ),
@@ -170,7 +209,12 @@ function TravPlanPortal() {
         /* STATUS TAB */
         tab === "status" && React.createElement("div", { style: { opacity: loaded ? 1 : 0, transform: loaded ? "none" : "translateY(12px)", transition: "all 0.4s ease" } },
           React.createElement("div", { style: { fontSize: 16, fontWeight: 700, marginBottom: 4 } }, "Booking Progress"),
-          React.createElement("div", { style: { fontSize: 12, color: "#64748b", marginBottom: 16 } }, "Real-time status extracted from email conversations"),
+          React.createElement("div", { style: { fontSize: 12, color: "#64748b", marginBottom: 8 } }, "Real-time status of your booking"),
+          React.createElement("div", { style: { padding: "6px 10px", background: "#f8fafc", borderRadius: 8, border: "1px dashed #e2e8f0", marginBottom: 16 } },
+            React.createElement("div", { style: { fontSize: 10, fontWeight: 700, color: "#64748b" } }, "BACKEND:"),
+            React.createElement("div", { style: { fontSize: 10, color: "#94a3b8" } }, "AI: Reads all email threads → extracts booking status → updates portal"),
+            React.createElement("div", { style: { fontSize: 10, color: "#94a3b8" } }, "Zoho: Syncs status to CRM → logs stage changes → triggers notifications")
+          ),
 
           /* Progress Bar */
           React.createElement("div", { style: { background: "#e5e5e0", borderRadius: 99, height: 6, marginBottom: 24, overflow: "hidden" } },
@@ -202,8 +246,13 @@ function TravPlanPortal() {
 
           /* Email Thread */
           React.createElement("div", { style: { marginTop: 24 } },
-            React.createElement("div", { style: { fontSize: 14, fontWeight: 700, marginBottom: 8 } }, "📧 Email Thread (AI-Parsed)"),
-            React.createElement("div", { style: { fontSize: 11, color: "#64748b", marginBottom: 12 } }, "Our AI reads your booking emails and extracts status updates automatically"),
+            React.createElement("div", { style: { fontSize: 14, fontWeight: 700, marginBottom: 4 } }, "📧 Communication History"),
+            React.createElement("div", { style: { fontSize: 11, color: "#64748b", marginBottom: 6 } }, "All conversations related to your booking"),
+            React.createElement("div", { style: { padding: "6px 10px", background: "#f8fafc", borderRadius: 8, border: "1px dashed #e2e8f0", marginBottom: 12 } },
+              React.createElement("div", { style: { fontSize: 10, fontWeight: 700, color: "#64748b" } }, "BACKEND:"),
+              React.createElement("div", { style: { fontSize: 10, color: "#94a3b8" } }, "AI: Parses email threads → classifies messages → extracts status signals"),
+              React.createElement("div", { style: { fontSize: 10, color: "#94a3b8" } }, "Zoho: All communications logged in Zoho Desk → linked to booking ticket")
+            ),
             EMAILS.map((e, i) =>
               React.createElement("div", { key: i, onClick: () => setShowEmailDetail(showEmailDetail === i ? null : i), style: {
                 background: "#fff", borderRadius: 10, padding: "10px 12px", marginBottom: 6,
@@ -231,55 +280,124 @@ function TravPlanPortal() {
         /* CUSTOMIZE TAB */
         tab === "customize" && React.createElement("div", null,
           React.createElement("div", { style: { fontSize: 16, fontWeight: 700, marginBottom: 4 } }, "Request Customization"),
-          React.createElement("div", { style: { fontSize: 12, color: "#64748b", marginBottom: 16 } }, "Our AI agent checks your request against our SOPs and processes it automatically"),
+          React.createElement("div", { style: { fontSize: 12, color: "#64748b", marginBottom: 16 } }, "Our team verifies your request and processes it quickly"),
 
-          React.createElement("div", { style: { background: "#fff", borderRadius: 12, padding: 14, marginBottom: 16, border: "1px solid #e5e5e0" } },
-            React.createElement("div", { style: { fontSize: 12, fontWeight: 700, marginBottom: 10, color: "#0f172a" } }, "⚡ How AI Customization Works"),
+          /* How it works - Agent view + Backend view */
+          React.createElement("div", { style: { background: "#fff", borderRadius: 12, padding: 14, marginBottom: 12, border: "1px solid #e5e5e0" } },
+            React.createElement("div", { style: { fontSize: 12, fontWeight: 700, marginBottom: 10, color: "#0f172a" } }, "⚡ How Customization Works"),
             React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 8 } },
-              [{ step: "1", text: "You describe what you want to change", color: "#dbeafe" },
-               { step: "2", text: "AI Agent checks against SOPs", color: "#fef3c7" },
-               { step: "3a", text: "Auto-approved → Email sent to supplier", color: "#d1fae5" },
-               { step: "3b", text: "Needs review → Routed to our team", color: "#fce7f3" }].map((s, i) =>
-                React.createElement("div", { key: i, style: { display: "flex", alignItems: "center", gap: 10 } },
-                  React.createElement("div", { style: { width: 28, height: 28, borderRadius: 8, background: s.color, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 700, flexShrink: 0 } }, s.step),
-                  React.createElement("div", { style: { fontSize: 12, color: "#334155" } }, s.text)
+              [{ step: "1", text: "You describe what you want to change", color: "#dbeafe", backend: null, zoho: null },
+               { step: "2", text: "Our team verifies your request", color: "#fef3c7", backend: "AI classifies request against SOPs", zoho: "Ticket created in Zoho Desk" },
+               { step: "3a", text: "Approved → Team is processing your request", color: "#d1fae5", backend: "AI auto-sends email to supplier", zoho: "Ticket updated → status: approved" },
+               { step: "3b", text: "Needs review → Our team will get back to you", color: "#fce7f3", backend: "Routed to human team for manual decision", zoho: "Ticket assigned to team member" }].map((s, i) =>
+                React.createElement("div", { key: i },
+                  React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 10 } },
+                    React.createElement("div", { style: { width: 28, height: 28, borderRadius: 8, background: s.color, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 700, flexShrink: 0 } }, s.step),
+                    React.createElement("div", { style: { fontSize: 12, color: "#334155" } }, s.text)
+                  ),
+                  s.backend && React.createElement("div", { style: { marginLeft: 38, marginTop: 2, fontSize: 10, color: "#94a3b8", fontStyle: "italic" } }, "[Backend: " + s.backend + "]"),
+                  s.zoho && React.createElement("div", { style: { marginLeft: 38, marginTop: 1, fontSize: 10, color: "#94a3b8", fontStyle: "italic" } }, "[Zoho: " + s.zoho + "]")
                 )
               )
             )
           ),
 
+          /* Sample Inputs */
+          React.createElement("div", { style: { background: "#fff", borderRadius: 12, padding: 14, marginBottom: 12, border: "1px solid #e5e5e0" } },
+            React.createElement("div", { style: { fontSize: 11, fontWeight: 700, color: "#0f172a", marginBottom: 8 } }, "TRY SAMPLE REQUESTS:"),
+            React.createElement("div", { style: { fontSize: 10, color: "#059669", fontWeight: 600, marginBottom: 6 } }, "✅ AI will auto-approve (email sent to supplier in backend):"),
+            React.createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 10 } },
+              ["Add Desert Safari on Day 4", "Add Dhow Cruise evening", "Upgrade to suite room", "Add airport transfer", "Change meals to vegetarian", "Add extra night at hotel"].map((s, i) =>
+                React.createElement("button", { key: i, onClick: () => setCustomText(s), style: {
+                  padding: "5px 10px", borderRadius: 6, fontSize: 10, fontWeight: 600, border: "1px solid #d1fae5",
+                  background: "#f0fdf4", color: "#065f46", cursor: "pointer", fontFamily: "inherit",
+                } }, s)
+              )
+            ),
+            React.createElement("div", { style: { fontSize: 10, color: "#dc2626", fontWeight: 600, marginBottom: 6 } }, "🔄 AI will route to manual review (needs human decision):"),
+            React.createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: 6 } },
+              ["Cancel my booking", "I want a full refund", "Change destination to Bali", "Change travel dates to next month"].map((s, i) =>
+                React.createElement("button", { key: i, onClick: () => setCustomText(s), style: {
+                  padding: "5px 10px", borderRadius: 6, fontSize: 10, fontWeight: 600, border: "1px solid #fde68a",
+                  background: "#fffbeb", color: "#92400e", cursor: "pointer", fontFamily: "inherit",
+                } }, s)
+              )
+            )
+          ),
+
+          /* Textarea */
           React.createElement("textarea", {
             value: customText, onChange: e => setCustomText(e.target.value),
-            placeholder: "Describe your customization request... e.g., 'Add an extra night at JW Marriott' or 'Change Day 3 sightseeing to Global Village'",
-            style: { width: "100%", minHeight: 100, borderRadius: 12, border: "1px solid #e5e5e0", padding: 14, fontSize: 13, fontFamily: "inherit", resize: "vertical", background: "#fff", outline: "none", boxSizing: "border-box" }
+            placeholder: "Type your request or click a sample above...",
+            style: { width: "100%", minHeight: 80, borderRadius: 12, border: "1px solid #e5e5e0", padding: 14, fontSize: 13, fontFamily: "inherit", resize: "vertical", background: "#fff", outline: "none", boxSizing: "border-box" }
           }),
           React.createElement("button", { onClick: handleCustomize, disabled: aiThinking || !customText.trim(), style: {
             width: "100%", marginTop: 10, padding: "12px 0", borderRadius: 10,
             background: aiThinking ? "#94a3b8" : "#0f172a", color: "#fff",
             fontSize: 14, fontWeight: 700, border: "none", cursor: aiThinking ? "default" : "pointer", fontFamily: "inherit",
-          } }, aiThinking ? "🤖 AI Agent Analyzing..." : "Submit Request"),
+          } }, aiThinking ? "Processing..." : "Submit Request"),
 
-          aiThinking && React.createElement("div", { style: { marginTop: 16, background: "#fff", borderRadius: 12, padding: 16, border: "1px solid #e5e5e0", textAlign: "center" } },
-            React.createElement("div", { style: { fontSize: 24, marginBottom: 8 } }, "🤖"),
-            React.createElement("div", { style: { fontSize: 13, fontWeight: 600, color: "#0f172a" } }, "AI Agent Processing"),
-            React.createElement("div", { style: { fontSize: 11, color: "#64748b", marginTop: 4 } }, "Checking SOPs & supplier availability...")
+          /* AI Thinking */
+          aiThinking && React.createElement("div", { style: { marginTop: 16, background: "#fff", borderRadius: 12, padding: 16, border: "1px solid #e5e5e0" } },
+            React.createElement("div", { style: { textAlign: "center" } },
+              React.createElement("div", { style: { fontSize: 24, marginBottom: 6 } }, "⏳"),
+              React.createElement("div", { style: { fontSize: 13, fontWeight: 600, color: "#0f172a" } }, "Processing Your Request"),
+              React.createElement("div", { style: { fontSize: 11, color: "#64748b", marginTop: 2 } }, "Verifying your request & checking availability...")
+            ),
+            React.createElement("div", { style: { marginTop: 10, padding: "8px 10px", background: "#f8fafc", borderRadius: 8, border: "1px dashed #e2e8f0" } },
+              React.createElement("div", { style: { fontSize: 10, fontWeight: 700, color: "#64748b", marginBottom: 4 } }, "BACKEND PROCESS:"),
+              React.createElement("div", { style: { fontSize: 10, color: "#94a3b8" } }, "1. AI reads the request text"),
+              React.createElement("div", { style: { fontSize: 10, color: "#94a3b8" } }, "2. Classifies against Standard Operating Procedures (SOPs)"),
+              React.createElement("div", { style: { fontSize: 10, color: "#94a3b8" } }, "3. Decision: Auto-approve OR route to manual review"),
+              React.createElement("div", { style: { fontSize: 10, color: "#94a3b8" } }, "4. If approved → AI drafts & sends email to supplier"),
+              React.createElement("div", { style: { fontSize: 10, color: "#94a3b8" } }, "5. Zoho Desk → Ticket created → status tracked → team notified")
+            )
           ),
 
-          customStatus === "approved" && React.createElement("div", { style: { marginTop: 16, background: "#d1fae5", borderRadius: 12, padding: 16, border: "1px solid #a7f3d0" } },
-            React.createElement("div", { style: { fontSize: 14, fontWeight: 700, color: "#065f46" } }, "✅ Request Auto-Approved"),
-            React.createElement("div", { style: { fontSize: 12, color: "#047857", marginTop: 4, lineHeight: 1.5 } }, "Our AI agent has verified this against SOPs. An email has been automatically sent to the supplier for confirmation. You'll receive an update within 2 hours.")
+          /* Approved Response */
+          customStatus && customStatus.type === "approved" && React.createElement("div", { style: { marginTop: 16 } },
+            React.createElement("div", { style: { background: "#d1fae5", borderRadius: 12, padding: 16, border: "1px solid #a7f3d0" } },
+              React.createElement("div", { style: { fontSize: 10, fontWeight: 700, color: "#065f46", letterSpacing: 1, marginBottom: 4 } }, "WHAT AGENT SEES:"),
+              React.createElement("div", { style: { fontSize: 14, fontWeight: 700, color: "#065f46" } }, "✅ Request Approved"),
+              React.createElement("div", { style: { fontSize: 12, color: "#047857", marginTop: 4, lineHeight: 1.5 } }, customStatus.msg)
+            ),
+            React.createElement("div", { style: { marginTop: 6, background: "#f8fafc", borderRadius: 10, padding: 12, border: "1px dashed #e2e8f0" } },
+              React.createElement("div", { style: { fontSize: 10, fontWeight: 700, color: "#64748b", marginBottom: 4 } }, "WHAT HAPPENS IN BACKEND:"),
+              React.createElement("div", { style: { fontSize: 10, color: "#94a3b8" } }, "AI → Verified request against SOPs → Classified as auto-approvable"),
+              React.createElement("div", { style: { fontSize: 10, color: "#94a3b8" } }, "AI → Auto-drafted supplier email with booking details → Sent"),
+              React.createElement("div", { style: { fontSize: 10, color: "#94a3b8" } }, "Zoho → Ticket created → Status: Approved → Outcome logged"),
+              React.createElement("div", { style: { fontSize: 10, color: "#94a3b8" } }, "Portal → Status updated once supplier confirms"),
+              React.createElement("div", { style: { fontSize: 10, color: "#94a3b8", marginTop: 4, fontStyle: "italic" } }, customStatus.backend)
+            )
           ),
 
-          customStatus === "manual" && React.createElement("div", { style: { marginTop: 16, background: "#fef3c7", borderRadius: 12, padding: 16, border: "1px solid #fde68a" } },
-            React.createElement("div", { style: { fontSize: 14, fontWeight: 700, color: "#92400e" } }, "🔄 Routed to Manual Review"),
-            React.createElement("div", { style: { fontSize: 12, color: "#a16207", marginTop: 4, lineHeight: 1.5 } }, "This request requires human review per our SOPs. A team member will evaluate and respond within 4 hours. Cancellation & refund requests need manual processing.")
+          /* Manual Review Response */
+          customStatus && customStatus.type === "manual" && React.createElement("div", { style: { marginTop: 16 } },
+            React.createElement("div", { style: { background: "#fef3c7", borderRadius: 12, padding: 16, border: "1px solid #fde68a" } },
+              React.createElement("div", { style: { fontSize: 10, fontWeight: 700, color: "#92400e", letterSpacing: 1, marginBottom: 4 } }, "WHAT AGENT SEES:"),
+              React.createElement("div", { style: { fontSize: 14, fontWeight: 700, color: "#92400e" } }, "🔄 Request Under Review"),
+              React.createElement("div", { style: { fontSize: 12, color: "#a16207", marginTop: 4, lineHeight: 1.5 } }, customStatus.msg)
+            ),
+            React.createElement("div", { style: { marginTop: 6, background: "#f8fafc", borderRadius: 10, padding: 12, border: "1px dashed #e2e8f0" } },
+              React.createElement("div", { style: { fontSize: 10, fontWeight: 700, color: "#64748b", marginBottom: 4 } }, "WHAT HAPPENS IN BACKEND:"),
+              React.createElement("div", { style: { fontSize: 10, color: "#94a3b8" } }, "AI → Classified against SOPs → Flagged for manual review"),
+              React.createElement("div", { style: { fontSize: 10, color: "#94a3b8" } }, "Zoho → Ticket created → Assigned to team member → Priority set"),
+              React.createElement("div", { style: { fontSize: 10, color: "#94a3b8" } }, "Team → Reviews with full context pre-filled → Contacts supplier if needed"),
+              React.createElement("div", { style: { fontSize: 10, color: "#94a3b8" } }, "Portal → Agent gets update + notification via communication channel"),
+              React.createElement("div", { style: { fontSize: 10, color: "#94a3b8", marginTop: 4, fontStyle: "italic" } }, customStatus.backend)
+            )
           )
         ),
 
         /* ADD-ONS TAB */
         tab === "addons" && React.createElement("div", null,
           React.createElement("div", { style: { fontSize: 16, fontWeight: 700, marginBottom: 4 } }, "Enhance Your Trip"),
-          React.createElement("div", { style: { fontSize: 12, color: "#64748b", marginBottom: 16 } }, "Curated experiences for Dubai · Add directly to your booking"),
+          React.createElement("div", { style: { fontSize: 12, color: "#64748b", marginBottom: 8 } }, "Curated experiences for Dubai · Add directly to your booking"),
+          React.createElement("div", { style: { padding: "6px 10px", background: "#f8fafc", borderRadius: 8, border: "1px dashed #e2e8f0", marginBottom: 16 } },
+            React.createElement("div", { style: { fontSize: 10, fontWeight: 700, color: "#64748b" } }, "BACKEND:"),
+            React.createElement("div", { style: { fontSize: 10, color: "#94a3b8" } }, "AI: Recommends add-ons based on destination & package → if purchased, auto-sends to supplier"),
+            React.createElement("div", { style: { fontSize: 10, color: "#94a3b8" } }, "Zoho: Logs purchase → updates GMV in CRM → tracks commission")
+          ),
 
           React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 10 } },
             ADDONS.map(a => {
@@ -315,50 +433,126 @@ function TravPlanPortal() {
             })
           ),
 
-          addedAddons.size > 0 && React.createElement("div", { style: { marginTop: 16, background: "#0f172a", borderRadius: 12, padding: 14, color: "#fff", textAlign: "center" } },
-            React.createElement("div", { style: { fontSize: 12, color: "#94a3b8" } }, addedAddons.size + " add-on(s) selected"),
+          addedAddons.size > 0 && !addonsConfirmed && React.createElement("div", {
+            onClick: () => setAddonsConfirmed(true),
+            style: { marginTop: 16, background: "#0f172a", borderRadius: 12, padding: 14, color: "#fff", textAlign: "center", cursor: "pointer" }
+          },
+            React.createElement("div", { style: { fontSize: 12, color: "#94a3b8" } }, addedAddons.size + " add-on(s) selected · ₹" + ADDONS.filter(a => addedAddons.has(a.id)).reduce((s, a) => s + a.numPrice, 0).toLocaleString("en-IN") + " total"),
             React.createElement("div", { style: { fontSize: 14, fontWeight: 700, marginTop: 4 } }, "Confirm & Add to Booking →")
+          ),
+
+          addonsConfirmed && React.createElement("div", { style: { marginTop: 16 } },
+            React.createElement("div", { style: { background: "#d1fae5", borderRadius: 12, padding: 16, border: "1px solid #a7f3d0" } },
+              React.createElement("div", { style: { fontSize: 10, fontWeight: 700, color: "#065f46", letterSpacing: 1, marginBottom: 4 } }, "WHAT AGENT SEES:"),
+              React.createElement("div", { style: { fontSize: 14, fontWeight: 700, color: "#065f46" } }, "✅ Add-Ons Confirmed!"),
+              React.createElement("div", { style: { fontSize: 12, color: "#047857", marginTop: 4 } }, addedAddons.size + " add-on(s) added to your booking. You'll receive updated itinerary within 2 hours."),
+              React.createElement("div", { style: { fontSize: 12, color: "#047857", marginTop: 2 } }, "Total: ₹" + ADDONS.filter(a => addedAddons.has(a.id)).reduce((s, a) => s + a.numPrice, 0).toLocaleString("en-IN"))
+            ),
+            React.createElement("div", { style: { marginTop: 6, background: "#f8fafc", borderRadius: 10, padding: 12, border: "1px dashed #e2e8f0" } },
+              React.createElement("div", { style: { fontSize: 10, fontWeight: 700, color: "#64748b", marginBottom: 4 } }, "WHAT HAPPENS IN BACKEND:"),
+              React.createElement("div", { style: { fontSize: 10, color: "#94a3b8" } }, "AI → Confirmed add-on availability with supplier"),
+              React.createElement("div", { style: { fontSize: 10, color: "#94a3b8" } }, "AI → Email auto-sent to supplier with booking + add-on details"),
+              React.createElement("div", { style: { fontSize: 10, color: "#94a3b8" } }, "Zoho → Ticket created → Add-on logged in CRM → GMV updated"),
+              React.createElement("div", { style: { fontSize: 10, color: "#94a3b8" } }, "Zoho → Revenue: +₹" + ADDONS.filter(a => addedAddons.has(a.id)).reduce((s, a) => s + a.numPrice, 0).toLocaleString("en-IN") + " tracked")
+            )
           )
         ),
 
         /* PROMOS TAB */
         tab === "promos" && React.createElement("div", null,
           React.createElement("div", { style: { fontSize: 16, fontWeight: 700, marginBottom: 4 } }, "Exclusive Partner Deals"),
-          React.createElement("div", { style: { fontSize: 12, color: "#64748b", marginBottom: 16 } }, "Special offers from our partners · Book and earn additional commissions"),
+          React.createElement("div", { style: { fontSize: 12, color: "#64748b", marginBottom: 8 } }, "Special offers from our partners · Add to booking and earn commissions"),
+          React.createElement("div", { style: { padding: "6px 10px", background: "#f8fafc", borderRadius: 8, border: "1px dashed #e2e8f0", marginBottom: 16 } },
+            React.createElement("div", { style: { fontSize: 10, fontWeight: 700, color: "#64748b" } }, "BACKEND:"),
+            React.createElement("div", { style: { fontSize: 10, color: "#94a3b8" } }, "AI: Displays promotions based on destination & travel dates → tracks conversions"),
+            React.createElement("div", { style: { fontSize: 10, color: "#94a3b8" } }, "Zoho: Logs partner booking → tracks 1-2% commission → updates revenue dashboard")
+          ),
 
           React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 12 } },
-            PROMOS.map(p =>
-              React.createElement("div", { key: p.id, style: { borderRadius: 14, overflow: "hidden", background: "linear-gradient(135deg, " + p.color + " 0%, " + p.color + "dd 100%)", position: "relative" } },
+            PROMOS.map(function(p) {
+              var selected = selectedPromos.has(p.id);
+              return React.createElement("div", { key: p.id, style: {
+                borderRadius: 14, overflow: "hidden", position: "relative",
+                background: "linear-gradient(135deg, " + p.color + " 0%, " + p.color + "dd 100%)",
+                border: selected ? "2px solid #fbbf24" : "2px solid transparent",
+                boxShadow: selected ? "0 0 0 2px rgba(251,191,36,0.3)" : "none",
+              } },
                 React.createElement("div", { style: { position: "absolute", top: -20, right: -20, width: 100, height: 100, borderRadius: "50%", background: p.accent + "15" } }),
                 React.createElement("div", { style: { padding: 16, position: "relative", zIndex: 1 } },
-                  React.createElement("div", { style: { display: "inline-block", fontSize: 10, fontWeight: 700, letterSpacing: 1, color: p.accent, background: p.accent + "20", padding: "3px 8px", borderRadius: 4, textTransform: "uppercase", marginBottom: 8 } }, p.partner),
-                  React.createElement("div", { style: { fontSize: 16, fontWeight: 700, color: "#fff", marginBottom: 4 } }, p.offer),
-                  React.createElement("div", { style: { fontSize: 13, color: "rgba(255,255,255,0.7)" } }, p.price),
+                  React.createElement("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "flex-start" } },
+                    React.createElement("div", null,
+                      React.createElement("div", { style: { display: "inline-block", fontSize: 10, fontWeight: 700, letterSpacing: 1, color: p.accent, background: p.accent + "20", padding: "3px 8px", borderRadius: 4, textTransform: "uppercase", marginBottom: 8 } }, p.partner),
+                      React.createElement("div", { style: { fontSize: 16, fontWeight: 700, color: "#fff", marginBottom: 4 } }, p.offer),
+                      React.createElement("div", { style: { fontSize: 13, color: "rgba(255,255,255,0.7)" } }, p.price)
+                    ),
+                    selected && React.createElement("div", { style: { background: "#fbbf24", borderRadius: "50%", width: 24, height: 24, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, flexShrink: 0 } }, "✓")
+                  ),
                   React.createElement("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 12 } },
-                    React.createElement("div", { style: { fontSize: 11, fontWeight: 700, color: p.accent, background: "rgba(255,255,255,0.1)", padding: "4px 10px", borderRadius: 6 } }, "💰 Earn " + p.commission),
-                    React.createElement("button", { style: { padding: "8px 16px", borderRadius: 8, fontSize: 12, fontWeight: 700, border: "1px solid " + p.accent, background: "transparent", color: "#fff", cursor: "pointer", fontFamily: "inherit" } }, "View Details →")
+                    React.createElement("div", { style: { fontSize: 11, fontWeight: 700, color: p.accent, background: "rgba(255,255,255,0.1)", padding: "4px 10px", borderRadius: 6 } }, "💰 Earn " + p.commission + " (₹" + Math.round(p.numPrice * p.commPct / 100).toLocaleString("en-IN") + ")"),
+                    React.createElement("button", { onClick: function() { togglePromo(p.id); }, style: {
+                      padding: "8px 16px", borderRadius: 8, fontSize: 12, fontWeight: 700, fontFamily: "inherit", cursor: "pointer",
+                      border: selected ? "none" : "1px solid " + p.accent,
+                      background: selected ? "#fbbf24" : "transparent",
+                      color: selected ? "#0f172a" : "#fff",
+                    } }, selected ? "✓ Added" : "Add to Booking")
                   )
                 )
-              )
+              );
+            })
+          ),
+
+          /* Deals Confirm Button */
+          selectedPromos.size > 0 && !dealsConfirmed && React.createElement("div", {
+            onClick: function() { setDealsConfirmed(true); },
+            style: { marginTop: 16, background: "#0f172a", borderRadius: 12, padding: 14, color: "#fff", textAlign: "center", cursor: "pointer" }
+          },
+            React.createElement("div", { style: { fontSize: 12, color: "#94a3b8" } }, selectedPromos.size + " deal(s) selected · ₹" + PROMOS.filter(function(p) { return selectedPromos.has(p.id); }).reduce(function(s, p) { return s + p.numPrice; }, 0).toLocaleString("en-IN") + " total"),
+            React.createElement("div", { style: { fontSize: 14, fontWeight: 700, marginTop: 4 } }, "Confirm & Book Deals →")
+          ),
+
+          dealsConfirmed && React.createElement("div", { style: { marginTop: 16 } },
+            React.createElement("div", { style: { background: "#d1fae5", borderRadius: 12, padding: 16, border: "1px solid #a7f3d0" } },
+              React.createElement("div", { style: { fontSize: 10, fontWeight: 700, color: "#065f46", letterSpacing: 1, marginBottom: 4 } }, "WHAT AGENT SEES:"),
+              React.createElement("div", { style: { fontSize: 14, fontWeight: 700, color: "#065f46" } }, "✅ Partner Deals Confirmed!"),
+              React.createElement("div", { style: { fontSize: 12, color: "#047857", marginTop: 4 } }, selectedPromos.size + " deal(s) booked. Our team will share detailed vouchers within 24 hours."),
+              React.createElement("div", { style: { fontSize: 12, color: "#047857", marginTop: 2 } }, "Total: ₹" + PROMOS.filter(function(p) { return selectedPromos.has(p.id); }).reduce(function(s, p) { return s + p.numPrice; }, 0).toLocaleString("en-IN"))
+            ),
+            React.createElement("div", { style: { marginTop: 6, background: "#f8fafc", borderRadius: 10, padding: 12, border: "1px dashed #e2e8f0" } },
+              React.createElement("div", { style: { fontSize: 10, fontWeight: 700, color: "#64748b", marginBottom: 4 } }, "WHAT HAPPENS IN BACKEND:"),
+              React.createElement("div", { style: { fontSize: 10, color: "#94a3b8" } }, "AI → Sent booking request to partner automatically"),
+              React.createElement("div", { style: { fontSize: 10, color: "#94a3b8" } }, "Zoho → Partner deal ticket created → Commission tracked"),
+              React.createElement("div", { style: { fontSize: 10, color: "#94a3b8" } }, "Zoho → Commission earned: ₹" + PROMOS.filter(function(p) { return selectedPromos.has(p.id); }).reduce(function(s, p) { return s + Math.round(p.numPrice * p.commPct / 100); }, 0).toLocaleString("en-IN"))
             )
           ),
 
-          /* Revenue Summary */
+          /* Revenue Summary - Dynamic with Add-Ons + Deals */
           React.createElement("div", { style: { marginTop: 20, background: "#fff", borderRadius: 12, padding: 14, border: "1px solid #e5e5e0" } },
             React.createElement("div", { style: { fontSize: 13, fontWeight: 700, marginBottom: 10 } }, "📊 Revenue Potential (This Booking)"),
             React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 6 } },
-              [{ label: "Base Package Margin", value: "₹18,500", color: "#0f172a" },
-               { label: "Add-On Revenue (est.)", value: "₹3,200", color: "#10b981" },
-               { label: "Promo Commission (est.)", value: "₹1,800", color: "#f59e0b" }].map((r, i) =>
-                React.createElement("div", { key: i, style: { display: "flex", justifyContent: "space-between", padding: "6px 0", borderBottom: i < 2 ? "1px solid #f1f5f9" : "none" } },
-                  React.createElement("span", { style: { fontSize: 12, color: "#64748b" } }, r.label),
-                  React.createElement("span", { style: { fontSize: 13, fontWeight: 700, color: r.color } }, r.value)
-                )
-              ),
-              React.createElement("div", { style: { display: "flex", justifyContent: "space-between", padding: "8px 0 0", borderTop: "2px solid #0f172a" } },
-                React.createElement("span", { style: { fontSize: 13, fontWeight: 700 } }, "Total Potential"),
-                React.createElement("span", { style: { fontSize: 15, fontWeight: 700, color: "#10b981" } }, "₹23,500")
-              )
+              (function() {
+                var addonTotal = ADDONS.filter(function(a) { return addedAddons.has(a.id); }).reduce(function(s, a) { return s + a.numPrice; }, 0);
+                var dealTotal = PROMOS.filter(function(p) { return selectedPromos.has(p.id); }).reduce(function(s, p) { return s + p.numPrice; }, 0);
+                var commTotal = PROMOS.filter(function(p) { return selectedPromos.has(p.id); }).reduce(function(s, p) { return s + Math.round(p.numPrice * p.commPct / 100); }, 0);
+                var base = 18500;
+                var items = [
+                  { label: "Base Package Margin", value: "₹" + base.toLocaleString("en-IN"), color: "#0f172a" },
+                  { label: "Add-On Revenue (" + addedAddons.size + " selected)", value: addedAddons.size > 0 ? "₹" + addonTotal.toLocaleString("en-IN") : "₹0", color: addedAddons.size > 0 ? "#10b981" : "#94a3b8" },
+                  { label: "Partner Deals (" + selectedPromos.size + " selected)", value: selectedPromos.size > 0 ? "₹" + dealTotal.toLocaleString("en-IN") : "₹0", color: selectedPromos.size > 0 ? "#3b82f6" : "#94a3b8" },
+                  { label: "Partner Commission Earned", value: commTotal > 0 ? "₹" + commTotal.toLocaleString("en-IN") : "₹0", color: commTotal > 0 ? "#f59e0b" : "#94a3b8" },
+                ];
+                var total = base + addonTotal + dealTotal + commTotal;
+                return items.map(function(r, i) {
+                  return React.createElement("div", { key: i, style: { display: "flex", justifyContent: "space-between", padding: "6px 0", borderBottom: i < 3 ? "1px solid #f1f5f9" : "none" } },
+                    React.createElement("span", { style: { fontSize: 12, color: "#64748b" } }, r.label),
+                    React.createElement("span", { style: { fontSize: 13, fontWeight: 700, color: r.color } }, r.value)
+                  );
+                }).concat([
+                  React.createElement("div", { key: "total", style: { display: "flex", justifyContent: "space-between", padding: "8px 0 0", borderTop: "2px solid #0f172a" } },
+                    React.createElement("span", { style: { fontSize: 13, fontWeight: 700 } }, "Total Potential"),
+                    React.createElement("span", { style: { fontSize: 15, fontWeight: 700, color: "#10b981" } }, "₹" + total.toLocaleString("en-IN"))
+                  )
+                ]);
+              })()
             )
           )
         )
@@ -375,7 +569,7 @@ function TravPlanPortal() {
   );
 }
 
-ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(TravPlanPortal));
+ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(NeedleMoverPortal));
   </script>
 </body>
 </html>
